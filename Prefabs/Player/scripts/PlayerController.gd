@@ -53,7 +53,6 @@ func _ready():
 	coyote_timer.wait_time = coyote_time
 
 	debug_text_label = get_tree().get_root().get_children()[0].get_child(0).get_child(0)
-	print(debug_text_label)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
