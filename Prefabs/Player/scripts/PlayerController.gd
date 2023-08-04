@@ -32,6 +32,8 @@ onready var step_detector = $WallDetector/StepDetector
 onready var coyote_timer = $CoyoteTimer
 onready var head_target = $HeadTarget
 
+var debug_text_label
+
 var input_event:InputEvent;
 
 # Handle inputs here.
@@ -50,12 +52,16 @@ func _unhandled_input(event):
 func _ready():
 	coyote_timer.wait_time = coyote_time
 
+	debug_text_label = get_tree().get_root().get_children()[0].get_child(0).get_child(0)
+	print(debug_text_label)
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	handle_movement(delta)
 	handle_walking()
 	crouch(delta)
+	test_collision_handling(debug_text_label)
 
 
 #### Movement functions ####
@@ -215,6 +221,15 @@ func movement_axes(forward_action, back_action, left_action, right_action):
 	
 	return axis.normalized()
 
-#### Ungrounded state ####
-func swim():
-	pass
+func test_collision_handling(debug_text_label:RichTextLabel):
+	var numSlides = get_slide_count()
+	
+	var txt = ''
+	
+	if (numSlides > 0):
+		for i in range(numSlides):
+			var collision:KinematicCollision = get_slide_collision(i)
+			
+			txt += str(collision.position)
+	
+	debug_text_label.text = txt
