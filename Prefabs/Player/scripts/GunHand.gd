@@ -1,14 +1,33 @@
 extends Spatial
 
-#onready var weapon_prefab = preload("res://Prefabs/Weapons/Pistol.tscn")
-#var current_weapon
+onready var tether_ray = $TetherRay
 
-# Called when the node enters the scene tree for the first time.
-#func _ready():
-#	current_weapon = weapon_prefab.instance()
-#	add_child(current_weapon)
+signal activate_tether(hitpos)
+signal place_tether_cursor(hitpos)
+signal hide_tether_cursor()
+signal deactivate_tether()
 
+var hitPos = Vector3.ZERO
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _process(_delta):
+	test_fire_tether()
+
+func test_fire_tether():
+	if (Input.is_action_pressed("fire_weapon")):
+		if (tether_ray.enabled and tether_ray.is_colliding()):
+			hitPos = tether_ray.get_collision_point()
+			tether_ray.enabled = false
+		
+		elif (tether_ray.enabled == false):
+			emit_signal("activate_tether", hitPos)
+		
+	elif (Input.is_action_just_released("fire_weapon")):
+		tether_ray.enabled = true
+		emit_signal("deactivate_tether")
+	
+	elif (tether_ray.is_colliding()):
+		hitPos = tether_ray.get_collision_point()
+		emit_signal("place_tether_cursor", hitPos)
+	
+	elif (!tether_ray.is_colliding()):
+		emit_signal("hide_tether_cursor")

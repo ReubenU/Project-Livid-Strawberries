@@ -19,6 +19,7 @@ size = Vector3( 20, 20, 20 )
 
 [node name="CollisionBounds" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0 )
+collision_layer = 2
 
 [node name="north" type="CollisionShape" parent="CollisionBounds"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10.5 )

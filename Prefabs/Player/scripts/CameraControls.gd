@@ -2,7 +2,7 @@ extends Spatial
 
 onready var player_body = $".."
 
-export var mouse_sens:float = 10;
+export var mouse_sens:float = 20;
 export var smooth_speed = 40;
 
 var bodyRot:float = 0;

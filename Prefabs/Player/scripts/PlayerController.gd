@@ -32,9 +32,19 @@ onready var step_detector = $WallDetector/StepDetector
 onready var coyote_timer = $CoyoteTimer
 onready var head_target = $HeadTarget
 
-var debug_text_label
+onready var tether_gun = $HeadTarget/GunHand
+onready var tether_cursor = $"../TetherCursor"
+
+var tether_delta = Vector3.ZERO
 
 var input_event:InputEvent;
+
+enum movement_states {
+	DEFAULT,
+	TETHERED
+}
+
+onready var move_state = movement_states.DEFAULT
 
 # Handle inputs here.
 func _unhandled_input(event):
@@ -51,17 +61,63 @@ func _unhandled_input(event):
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	coyote_timer.wait_time = coyote_time
-
-	debug_text_label = get_tree().get_root().get_children()[0].get_child(0).get_child(0)
+	
+	tether_gun.connect("activate_tether", self, "_on_Activate_Tether")
+	tether_gun.connect("deactivate_tether", self, "_on_Deactivate_Tether")
+	tether_gun.connect("place_tether_cursor", self, "_on_Place_Tether_Cursor")
+	tether_gun.connect("hide_tether_cursor", self, "_on_Hide_Tether_Cursor")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	handle_movement(delta)
-	handle_walking()
+	
+	match move_state:
+		movement_states.DEFAULT:
+			handle_movement(delta)
+			handle_walking()
+		movement_states.TETHERED:
+			launch_player(delta)
+		
 	crouch(delta)
-	test_collision_handling(debug_text_label)
+	
+	#print(tether_cursor.visible)
 
+#-------------------------------#
+
+#### Tether gun mechanic ####
+func _on_Activate_Tether(hitPos):
+	tether_delta = hitPos - global_transform.origin
+	
+	if (move_state != movement_states.TETHERED):
+		move_state = movement_states.TETHERED
+
+func _on_Deactivate_Tether():
+	h_velocity = lin_velocity
+	move_state = movement_states.DEFAULT
+	
+func _on_Place_Tether_Cursor(hitPos):
+	tether_cursor.visible = true
+	
+	tether_cursor.global_transform.origin = hitPos
+	
+func _on_Hide_Tether_Cursor():
+	tether_cursor.visible = false
+	
+func launch_player(delta):
+	gravity_vector = Vector3.ZERO
+	
+	var local_x = transform.basis.x * input_dir.x * run_speed
+	var local_z = transform.basis.z * input_dir.y * run_speed
+	
+	var velocity = local_x + local_z + (tether_delta.normalized() * 25)
+	
+	h_velocity = h_velocity.linear_interpolate(velocity, air_acceleration * delta)
+	
+	lin_velocity = move_and_slide(h_velocity, Vector3.UP)
+
+#### End Tether gun Mechanic ####
+
+#-------------------------------#
 
 #### Movement functions ####
 func handle_movement(delta):
@@ -114,7 +170,7 @@ func handle_movement(delta):
 		projected_velocity + gravity_vector,
 		Vector3.UP, false, 4, deg2rad(45)
 	)
-
+	
 	if (was_on_floor and !is_on_floor()):
 		coyote_timer.start()
 	
@@ -219,16 +275,3 @@ func movement_axes(forward_action, back_action, left_action, right_action):
 		axis.x = 0
 	
 	return axis.normalized()
-
-func test_collision_handling(debug_text_label:RichTextLabel):
-	var numSlides = get_slide_count()
-	
-	var txt = ''
-	
-	if (numSlides > 0):
-		for i in range(numSlides):
-			var collision:KinematicCollision = get_slide_collision(i)
-			
-			txt += str(collision.position)
-	
-	debug_text_label.text = txt
