@@ -19,7 +19,7 @@ height = 0.5
 [sub_resource type="SpatialMaterial" id=4]
 flags_transparent = true
 flags_unshaded = true
-albedo_color = Color( 0, 0.737255, 1, 0.560784 )
+albedo_color = Color( 1, 0.843137, 0, 0.501961 )
 
 [node name="PlayerRoot" type="Spatial"]
 physics_interpolation_mode = 2

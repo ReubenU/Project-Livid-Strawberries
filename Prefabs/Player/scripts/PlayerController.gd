@@ -104,16 +104,15 @@ func _on_Hide_Tether_Cursor():
 	tether_cursor.visible = false
 	
 func launch_player(delta):
-	gravity_vector = Vector3.ZERO
-	
 	var local_x = transform.basis.x * input_dir.x * run_speed
 	var local_z = transform.basis.z * input_dir.y * run_speed
 	
 	var velocity = local_x + local_z + (tether_delta.normalized() * 25)
 	
 	h_velocity = h_velocity.linear_interpolate(velocity, air_acceleration * delta)
+	gravity_vector = gravity_vector.linear_interpolate(velocity, air_acceleration * delta)
 	
-	lin_velocity = move_and_slide(h_velocity, Vector3.UP)
+	lin_velocity = move_and_slide((h_velocity+gravity_vector)/2, Vector3.UP)
 
 #### End Tether gun Mechanic ####
 

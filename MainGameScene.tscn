@@ -1,12 +1,21 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Levels/GymTestLevel.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/2D/MainReticle.png" type="Texture" id=2]
 
 [node name="CanvasLayer" type="CanvasLayer"]
 
 [node name="GUI System" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+
+[node name="In-game HUD" type="Control" parent="GUI System"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="MainReticle" type="Sprite" parent="GUI System/In-game HUD"]
+position = Vector2( 32, 32 )
+texture = ExtResource( 2 )
 
 [node name="Game World" type="Spatial" parent="."]
 
