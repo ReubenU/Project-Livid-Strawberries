@@ -5,8 +5,8 @@ export var walk_speed = 2
 export var h_acceleration = 6
 export var air_acceleration = 1
 export var normal_acceleration = 6
-var input_dir = Vector2()
-var h_velocity = Vector3()
+var input_dir = Vector2.ZERO
+var h_velocity = Vector3.ZERO
 var lin_velocity = Vector3.ZERO
 var movement_speed = run_speed
 
@@ -46,6 +46,8 @@ enum movement_states {
 
 onready var move_state = movement_states.DEFAULT
 
+#-------------------------------#
+
 # Handle inputs here.
 func _unhandled_input(event):
 	input_event = event;
@@ -79,8 +81,6 @@ func _physics_process(delta):
 			launch_player(delta)
 		
 	crouch(delta)
-	
-	#print(tether_cursor.visible)
 
 #-------------------------------#
 
@@ -109,10 +109,9 @@ func launch_player(delta):
 	
 	var velocity = local_x + local_z + (tether_delta.normalized() * 25)
 	
-	h_velocity = h_velocity.linear_interpolate(velocity, air_acceleration * delta)
 	gravity_vector = gravity_vector.linear_interpolate(velocity, air_acceleration * delta)
 	
-	lin_velocity = move_and_slide((h_velocity+gravity_vector)/2, Vector3.UP)
+	lin_velocity = move_and_slide(gravity_vector, Vector3.UP)
 
 #### End Tether gun Mechanic ####
 
@@ -141,7 +140,8 @@ func handle_movement(delta):
 	# If the player jumps into the ceiling, make them
 	# bounce back.
 	if (is_on_ceiling() and is_on_floor() == false):
-		gravity_vector = Vector3.DOWN
+		gravity_vector = Vector3.ZERO
+		h_velocity.y = 0
 	
 	# Handle steps and stairs
 	handle_steps()
@@ -163,10 +163,12 @@ func handle_movement(delta):
 	
 	var projected_velocity = Plane(get_floor_normal(), 0).project(h_velocity)
 	
+	var goal_velocity = projected_velocity + gravity_vector
+	
 	var was_on_floor = is_on_floor()
 	
 	lin_velocity = move_and_slide(
-		projected_velocity + gravity_vector,
+		goal_velocity,
 		Vector3.UP, false, 4, deg2rad(45)
 	)
 	

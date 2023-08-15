@@ -7,6 +7,10 @@ signal place_tether_cursor(hitpos)
 signal hide_tether_cursor()
 signal deactivate_tether()
 
+signal tether_fail()
+signal tether_hook()
+signal tether_held()
+
 var hitPos = Vector3.ZERO
 
 func _process(_delta):
@@ -17,9 +21,14 @@ func test_fire_tether():
 		if (tether_ray.enabled and tether_ray.is_colliding()):
 			hitPos = tether_ray.get_collision_point()
 			tether_ray.enabled = false
+			emit_signal("tether_hook")
 		
 		elif (tether_ray.enabled == false):
 			emit_signal("activate_tether", hitPos)
+			emit_signal("tether_held")
+		
+		elif (tether_ray.enabled and !tether_ray.is_colliding()):
+			emit_signal("tether_fail")
 		
 	elif (Input.is_action_just_released("fire_weapon")):
 		tether_ray.enabled = true

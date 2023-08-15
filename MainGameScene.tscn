@@ -1,22 +1,443 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=40 format=2]
 
-[ext_resource path="res://Levels/GymTestLevel.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/2D/main_start_button.png" type="Texture" id=1]
 [ext_resource path="res://Assets/2D/MainReticle.png" type="Texture" id=2]
+[ext_resource path="res://Prefabs/Environment/CoreScripts/GameManager.gd" type="Script" id=3]
+[ext_resource path="res://Assets/2D/main_settings_button.png" type="Texture" id=4]
+[ext_resource path="res://Assets/GlobalScripts/GUI_System.gd" type="Script" id=5]
+[ext_resource path="res://Assets/2D/main_start_button_selected.png" type="Texture" id=6]
+[ext_resource path="res://Assets/pansyhand.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://Assets/2D/main_settings_button_selected.png" type="Texture" id=8]
+[ext_resource path="res://Assets/2D/settings_gameplay_button_selected.png" type="Texture" id=9]
+[ext_resource path="res://Assets/2D/settings_gameplay_button.png" type="Texture" id=10]
+[ext_resource path="res://Assets/2D/slide_grabber.png" type="Texture" id=11]
+[ext_resource path="res://Assets/2D/slide_grabber_selected.png" type="Texture" id=12]
+[ext_resource path="res://Assets/GlobalScripts/SettingsMenu.gd" type="Script" id=13]
+[ext_resource path="res://Assets/2D/audio_options_button.png" type="Texture" id=14]
+[ext_resource path="res://Assets/2D/audio_options_button_selected.png" type="Texture" id=15]
+[ext_resource path="res://Assets/2D/back_button_selected.png" type="Texture" id=16]
+[ext_resource path="res://Assets/2D/back_button.png" type="Texture" id=17]
+[ext_resource path="res://Assets/2D/resume_button_selected.png" type="Texture" id=18]
+[ext_resource path="res://Assets/2D/slider_bg.png" type="Texture" id=19]
+[ext_resource path="res://Assets/2D/resume_button.png" type="Texture" id=20]
+[ext_resource path="res://Assets/2D/quit_button.png" type="Texture" id=21]
+[ext_resource path="res://Assets/2D/quit_button_selected.png" type="Texture" id=22]
+[ext_resource path="res://Assets/Audio/SFX/UI_Confirm.wav" type="AudioStream" id=23]
+[ext_resource path="res://Assets/GlobalScripts/GUI_SFX_Handler.gd" type="Script" id=24]
+[ext_resource path="res://Assets/Audio/SFX/UI_Hover_Down.wav" type="AudioStream" id=25]
+[ext_resource path="res://Assets/Audio/SFX/UI_Cancel.wav" type="AudioStream" id=26]
+[ext_resource path="res://Assets/Audio/Menu_MX_v1-B.mp3" type="AudioStream" id=27]
+
+[sub_resource type="DynamicFont" id=1]
+size = 32
+font_data = ExtResource( 7 )
+
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 7 )
+
+[sub_resource type="DynamicFont" id=3]
+font_data = ExtResource( 7 )
+
+[sub_resource type="DynamicFont" id=4]
+font_data = ExtResource( 7 )
+
+[sub_resource type="DynamicFont" id=5]
+font_data = ExtResource( 7 )
+
+[sub_resource type="StyleBoxEmpty" id=6]
+
+[sub_resource type="DynamicFont" id=7]
+font_data = ExtResource( 7 )
+
+[sub_resource type="StyleBoxTexture" id=13]
+texture = ExtResource( 19 )
+region_rect = Rect2( 0, 0, 48, 8 )
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[sub_resource type="StyleBoxEmpty" id=14]
+
+[sub_resource type="StyleBoxEmpty" id=15]
+
+[sub_resource type="DynamicFont" id=16]
+font_data = ExtResource( 7 )
+
+[sub_resource type="DynamicFont" id=17]
+font_data = ExtResource( 7 )
 
 [node name="CanvasLayer" type="CanvasLayer"]
 
 [node name="GUI System" type="Control" parent="."]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="BackgroundColor" type="ColorRect" parent="GUI System"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.48, 0, 0, 1 )
+
+[node name="MainMenu" type="Control" parent="GUI System"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 
+[node name="Play Game Button" type="TextureButton" parent="GUI System/MainMenu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -16.0
+margin_right = 16.0
+margin_bottom = 8.0
+texture_normal = ExtResource( 1 )
+texture_hover = ExtResource( 6 )
+
+[node name="Settings Button" type="TextureButton" parent="GUI System/MainMenu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -16.0
+margin_top = 15.0
+margin_right = 16.0
+margin_bottom = 23.0
+texture_normal = ExtResource( 4 )
+texture_hover = ExtResource( 8 )
+
+[node name="Label" type="Label" parent="GUI System/MainMenu"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -32.0
+margin_right = 32.0
+margin_bottom = 28.0
+custom_colors/font_color = Color( 0, 1, 1, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "MOVERE"
+align = 1
+
 [node name="In-game HUD" type="Control" parent="GUI System"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="MainReticle" type="Sprite" parent="GUI System/In-game HUD"]
 position = Vector2( 32, 32 )
 texture = ExtResource( 2 )
 
-[node name="Game World" type="Spatial" parent="."]
+[node name="Settings Menu" type="Control" parent="GUI System"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource( 13 )
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="GymTestLevel" parent="Game World" instance=ExtResource( 1 )]
+[node name="Header" type="Label" parent="GUI System/Settings Menu"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -15.0
+margin_right = 15.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 1, 1, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "Settings"
+align = 1
+
+[node name="Button Menu" type="Control" parent="GUI System/Settings Menu"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Gameplay Options Button" type="TextureButton" parent="GUI System/Settings Menu/Button Menu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -16.0
+margin_top = -11.0
+margin_right = 16.0
+margin_bottom = -3.0
+texture_normal = ExtResource( 10 )
+texture_hover = ExtResource( 9 )
+
+[node name="Audio Options Button" type="TextureButton" parent="GUI System/Settings Menu/Button Menu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -16.0
+margin_top = 3.0
+margin_right = 16.0
+margin_bottom = 11.0
+texture_normal = ExtResource( 14 )
+texture_hover = ExtResource( 15 )
+
+[node name="BackButton" type="TextureButton" parent="GUI System/Settings Menu/Button Menu"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -16.0
+margin_top = -11.0
+margin_right = 16.0
+margin_bottom = -3.0
+texture_normal = ExtResource( 17 )
+texture_hover = ExtResource( 16 )
+
+[node name="Gameplay Options" type="Control" parent="GUI System/Settings Menu"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="MouseLabel" type="Label" parent="GUI System/Settings Menu/Gameplay Options"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -30.0
+margin_top = -19.0
+margin_right = -6.0
+margin_bottom = -5.0
+custom_colors/font_color = Color( 0, 1, 1, 1 )
+custom_fonts/font = SubResource( 3 )
+text = "Mouse:"
+align = 1
+
+[node name="MouseSpeed" type="Label" parent="GUI System/Settings Menu/Gameplay Options"]
+margin_left = 8.0
+margin_top = 25.0
+margin_right = 28.0
+margin_bottom = 39.0
+custom_colors/font_color = Color( 0, 1, 1, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "Speed"
+
+[node name="MouseSmooth" type="Label" parent="GUI System/Settings Menu/Gameplay Options"]
+margin_left = 8.0
+margin_top = 39.0
+margin_right = 34.0
+margin_bottom = 53.0
+custom_colors/font_color = Color( 0, 1, 1, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "Smooth"
+
+[node name="MouseSpeedText" type="LineEdit" parent="GUI System/Settings Menu/Gameplay Options"]
+margin_left = 36.0
+margin_top = 25.0
+margin_right = 60.0
+margin_bottom = 39.0
+custom_constants/minimum_spaces = 0
+custom_fonts/font = SubResource( 5 )
+custom_styles/normal = SubResource( 6 )
+text = "20"
+align = 1
+placeholder_text = "40"
+
+[node name="MouseSmoothText" type="LineEdit" parent="GUI System/Settings Menu/Gameplay Options"]
+margin_left = 36.0
+margin_top = 39.0
+margin_right = 60.0
+margin_bottom = 53.0
+custom_constants/minimum_spaces = 0
+custom_fonts/font = SubResource( 5 )
+custom_styles/normal = SubResource( 6 )
+text = "40"
+align = 1
+placeholder_text = "40"
+
+[node name="BackButton" type="TextureButton" parent="GUI System/Settings Menu/Gameplay Options"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -16.0
+margin_top = -9.0
+margin_right = 16.0
+margin_bottom = -1.0
+texture_normal = ExtResource( 17 )
+texture_hover = ExtResource( 16 )
+
+[node name="Audio Options" type="Control" parent="GUI System/Settings Menu"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="AudioVolumeLabel" type="Label" parent="GUI System/Settings Menu/Audio Options"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -18.0
+margin_top = -18.0
+margin_right = 19.0
+margin_bottom = -4.0
+custom_colors/font_color = Color( 0, 1, 1, 1 )
+custom_fonts/font = SubResource( 7 )
+text = "Audio Vol."
+align = 1
+
+[node name="VolumeSlider" type="HSlider" parent="GUI System/Settings Menu/Audio Options"]
+margin_left = 6.0
+margin_top = 28.0
+margin_right = 58.0
+margin_bottom = 36.0
+custom_icons/grabber_highlight = ExtResource( 12 )
+custom_icons/grabber = ExtResource( 11 )
+custom_styles/slider = SubResource( 13 )
+custom_styles/grabber_area_highlight = SubResource( 14 )
+custom_styles/grabber_area = SubResource( 15 )
+value = 20.0
+
+[node name="BackButton" type="TextureButton" parent="GUI System/Settings Menu/Audio Options"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -16.0
+margin_top = -9.0
+margin_right = 16.0
+margin_bottom = -1.0
+texture_normal = ExtResource( 17 )
+texture_hover = ExtResource( 16 )
+
+[node name="PauseMenu" type="Control" parent="GUI System"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="PauseLabel" type="Label" parent="GUI System/PauseMenu"]
+anchor_right = 1.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 1, 1, 1 )
+custom_fonts/font = SubResource( 16 )
+text = "Paused"
+align = 1
+
+[node name="Resume" type="TextureButton" parent="GUI System/PauseMenu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -16.0
+margin_top = -11.0
+margin_right = 16.0
+margin_bottom = -3.0
+texture_normal = ExtResource( 20 )
+texture_hover = ExtResource( 18 )
+
+[node name="Quit" type="TextureButton" parent="GUI System/PauseMenu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -16.0
+margin_top = 2.0
+margin_right = 16.0
+margin_bottom = 10.0
+texture_normal = ExtResource( 21 )
+texture_hover = ExtResource( 22 )
+
+[node name="WinMenu" type="Control" parent="GUI System"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Label" type="Label" parent="GUI System/WinMenu"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -20.0
+margin_right = 20.0
+margin_bottom = 14.0
+custom_fonts/font = SubResource( 17 )
+text = "You Win!"
+align = 1
+
+[node name="Return" type="TextureButton" parent="GUI System/WinMenu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -16.0
+margin_top = -7.0
+margin_right = 16.0
+margin_bottom = 1.0
+texture_normal = ExtResource( 20 )
+texture_hover = ExtResource( 18 )
+
+[node name="Game World" type="Spatial" parent="."]
+pause_mode = 2
+script = ExtResource( 3 )
+
+[node name="GUI SFX" type="Node" parent="."]
+pause_mode = 2
+script = ExtResource( 24 )
+
+[node name="GUIClick" type="AudioStreamPlayer" parent="GUI SFX"]
+stream = ExtResource( 23 )
+
+[node name="GUICancel" type="AudioStreamPlayer" parent="GUI SFX"]
+stream = ExtResource( 26 )
+
+[node name="GUISelect" type="AudioStreamPlayer" parent="GUI SFX"]
+stream = ExtResource( 25 )
+
+[node name="MenuMusic" type="AudioStreamPlayer" parent="GUI SFX"]
+stream = ExtResource( 27 )
+autoplay = true
+
+[connection signal="button_down" from="GUI System/MainMenu/Play Game Button" to="GUI System" method="_on_Play_Game_Button_button_down"]
+[connection signal="mouse_entered" from="GUI System/MainMenu/Play Game Button" to="GUI SFX" method="_on_Play_Game_Button_mouse_entered"]
+[connection signal="pressed" from="GUI System/MainMenu/Play Game Button" to="GUI SFX" method="_on_Play_Game_Button_pressed"]
+[connection signal="mouse_entered" from="GUI System/MainMenu/Settings Button" to="GUI SFX" method="_on_Settings_Button_mouse_entered"]
+[connection signal="pressed" from="GUI System/MainMenu/Settings Button" to="GUI System" method="_on_Settings_Button_pressed"]
+[connection signal="pressed" from="GUI System/MainMenu/Settings Button" to="GUI SFX" method="_on_Settings_Button_pressed"]
+[connection signal="mouse_entered" from="GUI System/Settings Menu/Button Menu/Gameplay Options Button" to="GUI SFX" method="_on_Gameplay_Options_Button_mouse_entered"]
+[connection signal="pressed" from="GUI System/Settings Menu/Button Menu/Gameplay Options Button" to="GUI System/Settings Menu" method="_on_Gameplay_Options_Button_pressed"]
+[connection signal="pressed" from="GUI System/Settings Menu/Button Menu/Gameplay Options Button" to="GUI SFX" method="_on_Gameplay_Options_Button_pressed"]
+[connection signal="mouse_entered" from="GUI System/Settings Menu/Button Menu/Audio Options Button" to="GUI SFX" method="_on_Audio_Options_Button_mouse_entered"]
+[connection signal="pressed" from="GUI System/Settings Menu/Button Menu/Audio Options Button" to="GUI System/Settings Menu" method="_on_Audio_Options_Button_pressed"]
+[connection signal="pressed" from="GUI System/Settings Menu/Button Menu/Audio Options Button" to="GUI SFX" method="_on_Audio_Options_Button_pressed"]
+[connection signal="mouse_entered" from="GUI System/Settings Menu/Button Menu/BackButton" to="GUI SFX" method="_on_BackButton_mouse_entered"]
+[connection signal="pressed" from="GUI System/Settings Menu/Button Menu/BackButton" to="GUI System/Settings Menu" method="_on_BackButton_pressed"]
+[connection signal="pressed" from="GUI System/Settings Menu/Button Menu/BackButton" to="GUI SFX" method="_on_BackButton_pressed"]
+[connection signal="text_changed" from="GUI System/Settings Menu/Gameplay Options/MouseSpeedText" to="Game World" method="_on_MouseSpeedText_text_changed"]
+[connection signal="text_changed" from="GUI System/Settings Menu/Gameplay Options/MouseSmoothText" to="Game World" method="_on_MouseSmoothText_text_changed"]
+[connection signal="mouse_entered" from="GUI System/Settings Menu/Gameplay Options/BackButton" to="GUI SFX" method="_on_BackButton_mouse_entered"]
+[connection signal="pressed" from="GUI System/Settings Menu/Gameplay Options/BackButton" to="GUI System/Settings Menu" method="_on_GamePlayOptions_BackButton_pressed"]
+[connection signal="pressed" from="GUI System/Settings Menu/Gameplay Options/BackButton" to="GUI SFX" method="_on_BackButton_pressed"]
+[connection signal="value_changed" from="GUI System/Settings Menu/Audio Options/VolumeSlider" to="Game World" method="_on_VolumeSlider_value_changed"]
+[connection signal="mouse_entered" from="GUI System/Settings Menu/Audio Options/BackButton" to="GUI SFX" method="_on_BackButton_mouse_entered"]
+[connection signal="pressed" from="GUI System/Settings Menu/Audio Options/BackButton" to="GUI System/Settings Menu" method="_on_AudioOptions_BackButton_pressed"]
+[connection signal="pressed" from="GUI System/Settings Menu/Audio Options/BackButton" to="GUI SFX" method="_on_BackButton_pressed"]
+[connection signal="mouse_entered" from="GUI System/PauseMenu/Resume" to="GUI SFX" method="_on_Resume_mouse_entered"]
+[connection signal="pressed" from="GUI System/PauseMenu/Resume" to="Game World" method="_on_Resume_pressed"]
+[connection signal="pressed" from="GUI System/PauseMenu/Resume" to="GUI SFX" method="_on_Resume_pressed"]
+[connection signal="mouse_entered" from="GUI System/PauseMenu/Quit" to="GUI SFX" method="_on_Quit_mouse_entered"]
+[connection signal="pressed" from="GUI System/PauseMenu/Quit" to="Game World" method="_on_Quit_pressed"]
+[connection signal="pressed" from="GUI System/PauseMenu/Quit" to="GUI SFX" method="_on_Quit_pressed"]
+[connection signal="mouse_entered" from="GUI System/WinMenu/Return" to="GUI SFX" method="_on_Return_mouse_entered"]
+[connection signal="pressed" from="GUI System/WinMenu/Return" to="Game World" method="_on_Return_pressed"]
+[connection signal="pressed" from="GUI System/WinMenu/Return" to="GUI SFX" method="_on_Return_pressed"]

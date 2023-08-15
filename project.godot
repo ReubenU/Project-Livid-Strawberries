@@ -14,6 +14,10 @@ config/name="Project-Livid-Strawberries"
 run/main_scene="res://MainGameScene.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+GameSettings="*res://Assets/GlobalScripts/GameSettings.gd"
+
 [display]
 
 window/size/width=64

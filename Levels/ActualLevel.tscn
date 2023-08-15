@@ -1,0 +1,154 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Prefabs/Environment/LevelElements/Platform.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Prefabs/Player/PlayerController.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Prefabs/Environment/LevelElements/Doorway.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Prefabs/Environment/LevelElements/Killzone.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Prefabs/Environment/LevelElements/level_structure.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Levels/CheckpointA.gd" type="Script" id=6]
+[ext_resource path="res://Levels/CheckpointB.gd" type="Script" id=7]
+[ext_resource path="res://Levels/CheckpointC.gd" type="Script" id=8]
+[ext_resource path="res://Levels/CheckpointD.gd" type="Script" id=9]
+[ext_resource path="res://Levels/CheckpointE.gd" type="Script" id=10]
+[ext_resource path="res://Prefabs/Environment/LevelElements/Column.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Prefabs/Environment/LevelElements/Sphere.tscn" type="PackedScene" id=12]
+
+[node name="ActualLevel" type="Spatial"]
+pause_mode = 1
+
+[node name="Doorway" parent="." instance=ExtResource( 3 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 158.773, 23.7311, -91.0988 )
+
+[node name="Column" parent="." instance=ExtResource( 11 )]
+transform = Transform( 0.514232, -0.68639, 0.514232, 0.485351, 0.727234, 0.485351, -0.707107, 0, 0.707107, 108.502, 29.8501, -98.2952 )
+
+[node name="Platform" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 76.4024, -0.5, -26.2983 )
+
+[node name="Sphere" parent="." instance=ExtResource( 12 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 130.323, 36.6389, -84.3168 )
+
+[node name="Platform2" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 158.153, 23.2821, -91.0643 )
+
+[node name="PlayerRoot" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8.95212, 0 )
+
+[node name="KillzoneA" type="Spatial" parent="."]
+
+[node name="Killzone" parent="KillzoneA" instance=ExtResource( 4 )]
+transform = Transform( 40, 0, 0, 0, 1, 0, 0, 0, 15, 11.3545, -11.4985, -69.3914 )
+
+[node name="Killzone2" parent="KillzoneA" instance=ExtResource( 4 )]
+transform = Transform( -1.74846e-06, 0, -15, 0, 1, 0, 40, 0, -6.55671e-07, 39.2937, 10.2014, -47.2868 )
+
+[node name="KillzoneB" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 59.4166, -27.0928, -37.4702 )
+
+[node name="Killzone" parent="KillzoneB" instance=ExtResource( 4 )]
+transform = Transform( 0.999944, -0.211181, 0, 0.010559, 19.9989, 0.00340339, -2.39577e-06, -0.0045376, 15, -30.5082, -3.00015, 7.75323 )
+
+[node name="Killzone2" parent="KillzoneB" instance=ExtResource( 4 )]
+transform = Transform( 0.999944, -0.10559, 0, 0.010559, 9.99944, 0, 0, 0, 15, -8.13068, 7.29842, 7.75323 )
+
+[node name="Killzone3" parent="KillzoneB" instance=ExtResource( 4 )]
+transform = Transform( -4.3709e-08, 9.23101e-09, 15, 0.010559, 19.9989, 4.44064e-16, -0.999944, 0.211181, -6.55671e-07, -19.0205, -3.07624, -4.07344 )
+
+[node name="Killzone4" parent="KillzoneB" instance=ExtResource( 4 )]
+transform = Transform( 0.012478, -0.00263527, 14.9988, 0.010559, 19.9989, 4.44064e-16, -0.999866, 0.211164, 0.187181, -19.0205, -3.07624, 19.352 )
+
+[node name="KillzoneC" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 79.269, -7.62939e-06, -31.7323 )
+
+[node name="Killzone" parent="KillzoneC" instance=ExtResource( 4 )]
+transform = Transform( 12.94, 0, 0, 0, 1, 0, 0, 0, 12.94, -5.0685, -2.91104, 7.01593 )
+
+[node name="Killzone2" parent="KillzoneC" instance=ExtResource( 4 )]
+transform = Transform( 12.94, 0, 0, 0, 1, 0, 0, 0, 12.94, 5.11705, 43.8894, -2.95489 )
+
+[node name="Killzone3" parent="KillzoneC" instance=ExtResource( 4 )]
+transform = Transform( 12.94, 0, 0, 0, 1, 0, 0, 0, 12.94, 1.83365, 75.3919, 0.84906 )
+
+[node name="Killzone4" parent="KillzoneC" instance=ExtResource( 4 )]
+transform = Transform( 12.94, 0, 0, 0, -4.37114e-08, -12.94, 0, 1, -5.65625e-07, 1.83365, 65.9041, 13.5998 )
+
+[node name="Killzone5" parent="KillzoneC" instance=ExtResource( 4 )]
+transform = Transform( -5.65625e-07, -1, 5.65625e-07, 0, -4.37114e-08, -12.94, 12.94, -4.37114e-08, 2.47243e-14, -10.3001, 65.9041, 2.42819 )
+
+[node name="Killzone6" parent="KillzoneC" instance=ExtResource( 4 )]
+transform = Transform( -5.65625e-07, -1, 5.65625e-07, 0, -4.37114e-08, -12.94, 12.94, -4.37114e-08, 2.47243e-14, 12.0154, 65.9041, 2.42819 )
+
+[node name="KillzoneD" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 80.6626, 65.6119, -60.2858 )
+
+[node name="Killzone" parent="KillzoneD" instance=ExtResource( 4 )]
+transform = Transform( 10, 0, 0, 0, 1, 0, 0, 0, 40, 0, 11.3128, 0 )
+
+[node name="Killzone2" parent="KillzoneD" instance=ExtResource( 4 )]
+transform = Transform( -4.37114e-07, 1, 0, -10, -4.37114e-08, 0, 0, 0, 40, 11.0211, 1.31278, -1.66527 )
+
+[node name="Killzone3" parent="KillzoneD" instance=ExtResource( 4 )]
+transform = Transform( -4.37114e-07, 1, 0, -10, -4.37114e-08, 0, 0, 0, 40, -12.0276, 1.31278, -1.66527 )
+
+[node name="KillzoneE" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 114.956, 21.9057, -90.3222 )
+
+[node name="Killzone" parent="KillzoneE" instance=ExtResource( 4 )]
+transform = Transform( 40, 0, 0, 0, 1, 0, 0, 0, 13, 14.7544, -5.36639, 0 )
+
+[node name="Killzone4" parent="KillzoneE" instance=ExtResource( 4 )]
+transform = Transform( 40, 0, 0, 0, 1, 0, 0, 0, 13, 15.2459, 20.564, 0 )
+
+[node name="Killzone5" parent="KillzoneE" instance=ExtResource( 4 )]
+transform = Transform( -5.68248e-07, 1, 0, -13, -4.37114e-08, 0, 0, 0, 13, 53.7105, 6.68188, 0 )
+
+[node name="Killzone2" parent="KillzoneE" instance=ExtResource( 4 )]
+transform = Transform( 40, 0, 0, 0, -4.37114e-08, 13, 0, -1, -5.68248e-07, 14.7544, 7.26369, 11.5569 )
+
+[node name="Killzone3" parent="KillzoneE" instance=ExtResource( 4 )]
+transform = Transform( 40, 0, 0, 0, -4.37114e-08, 13, 0, -1, -5.68248e-07, 14.7544, 7.26369, -12.245 )
+
+[node name="Checkpoints" type="Spatial" parent="."]
+
+[node name="CheckpointA" type="Spatial" parent="Checkpoints"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8.58487, 0 )
+script = ExtResource( 6 )
+
+[node name="CheckpointB" type="Spatial" parent="Checkpoints"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 39.506, -8.20723, -48.3881 )
+script = ExtResource( 7 )
+
+[node name="CheckpointC" type="Spatial" parent="Checkpoints"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 65.2393, -47.9001, -28.9451 )
+script = ExtResource( 8 )
+
+[node name="CheckpointD" type="Spatial" parent="Checkpoints"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 80.4056, 61.5064, -48.5006 )
+script = ExtResource( 9 )
+
+[node name="CheckpointE" type="Spatial" parent="Checkpoints"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 80.4016, 20.9892, -91.0961 )
+script = ExtResource( 10 )
+
+[node name="level" parent="." instance=ExtResource( 5 )]
+
+[connection signal="body_entered" from="KillzoneA/Killzone" to="Checkpoints/CheckpointA" method="_on_KillzoneA_body_entered"]
+[connection signal="body_entered" from="KillzoneA/Killzone2" to="Checkpoints/CheckpointA" method="_on_KillzoneA_body_entered"]
+[connection signal="body_entered" from="KillzoneB/Killzone" to="Checkpoints/CheckpointB" method="_on_KillzoneB_body_entered"]
+[connection signal="body_entered" from="KillzoneB/Killzone2" to="Checkpoints/CheckpointB" method="_on_KillzoneB_body_entered"]
+[connection signal="body_entered" from="KillzoneB/Killzone3" to="Checkpoints/CheckpointB" method="_on_KillzoneB_body_entered"]
+[connection signal="body_entered" from="KillzoneB/Killzone4" to="Checkpoints/CheckpointB" method="_on_KillzoneB_body_entered"]
+[connection signal="body_entered" from="KillzoneC/Killzone" to="Checkpoints/CheckpointC" method="_on_KillzoneC_body_entered"]
+[connection signal="body_entered" from="KillzoneC/Killzone2" to="Checkpoints/CheckpointC" method="_on_KillzoneC_body_entered"]
+[connection signal="body_entered" from="KillzoneC/Killzone3" to="Checkpoints/CheckpointC" method="_on_KillzoneC_body_entered"]
+[connection signal="body_entered" from="KillzoneC/Killzone4" to="Checkpoints/CheckpointC" method="_on_KillzoneC_body_entered"]
+[connection signal="body_entered" from="KillzoneC/Killzone5" to="Checkpoints/CheckpointC" method="_on_KillzoneC_body_entered"]
+[connection signal="body_entered" from="KillzoneC/Killzone6" to="Checkpoints/CheckpointC" method="_on_KillzoneC_body_entered"]
+[connection signal="body_entered" from="KillzoneD/Killzone" to="Checkpoints/CheckpointD" method="_on_KillzoneD_body_entered"]
+[connection signal="body_entered" from="KillzoneD/Killzone2" to="Checkpoints/CheckpointD" method="_on_KillzoneD_body_entered"]
+[connection signal="body_entered" from="KillzoneD/Killzone3" to="Checkpoints/CheckpointD" method="_on_KillzoneD_body_entered"]
+[connection signal="body_entered" from="KillzoneE/Killzone" to="Checkpoints/CheckpointE" method="_on_KillzoneE_body_entered"]
+[connection signal="body_entered" from="KillzoneE/Killzone4" to="Checkpoints/CheckpointE" method="_on_KillzoneE_body_entered"]
+[connection signal="body_entered" from="KillzoneE/Killzone5" to="Checkpoints/CheckpointE" method="_on_KillzoneE_body_entered"]
+[connection signal="body_entered" from="KillzoneE/Killzone2" to="Checkpoints/CheckpointE" method="_on_KillzoneE_body_entered"]
+[connection signal="body_entered" from="KillzoneE/Killzone3" to="Checkpoints/CheckpointE" method="_on_KillzoneE_body_entered"]

@@ -2,9 +2,6 @@ extends Spatial
 
 onready var player_body = $".."
 
-export var mouse_sens:float = 20;
-export var smooth_speed = 40;
-
 var bodyRot:float = 0;
 var camRot:float = 0;
 var currentCamRot = 0
@@ -13,14 +10,12 @@ var deltaTime:float = 0;
 
 # Handle inputs here.
 func _input(event):
-	# Handle mouse capturing.
-	lock_mouse(event);
 	handle_mouse_motion_input(event)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
@@ -33,6 +28,8 @@ func _physics_process(delta):
 # after the rotation values have been modified by
 # handle_mouse_motion_input()
 func apply_mouselook_rotation():
+	var smooth_speed = GameSettings.mouse_smoothing
+	
 	# Interpolate the camera pitch to the new pitch rotation.
 	currentCamRot = lerp(currentCamRot, camRot, deltaTime * smooth_speed)
 	
@@ -54,6 +51,8 @@ func apply_mouselook_rotation():
 # ticks between the _input function and the _physics_process
 # function.
 func handle_mouse_motion_input(event:InputEvent):
+	var mouse_sens = GameSettings.mouse_sensitivity
+	
 	if (event is InputEventMouseMotion):
 		camRot += event.relative.y * mouse_sens * deltaTime;
 		bodyRot += event.relative.x * mouse_sens * deltaTime;
@@ -63,14 +62,6 @@ func handle_mouse_motion_input(event:InputEvent):
 		bodyRot = repeat(bodyRot, 360);
 		
 		event.relative = Vector2.ZERO;
-
-# Lock and hide the mouse cursor in the window.
-func lock_mouse(event:InputEvent):
-	if (event.is_action_pressed("ui_cancel")):
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE;
-		
-	if (event.is_action_pressed("ui_accept")):
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED;
 
 #### END MOUSE LOOK SECTION ####
 
