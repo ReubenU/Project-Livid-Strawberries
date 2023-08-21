@@ -25,4 +25,3 @@ func _on_Settings_Button_pressed():
 	mainmenu.visible = false
 	
 	settings.previous_menu = mainmenu
-

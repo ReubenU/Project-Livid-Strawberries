@@ -63,9 +63,11 @@ func _on_MouseSmoothText_text_changed(new_text):
 		GameSettings.mouse_smoothing = float(new_text)
 
 
-func _on_VolumeSlider_value_changed(value):
-	GameSettings.audio_volume = value/100.0
+func _on_Music_Slider_value_changed(value):
+	GameSettings.music_volume = value
 
+func _on_SFX_Slider_value_changed(value):
+	GameSettings.sfx_volume = value
 
 func _on_Resume_pressed():
 	hud.visible = true

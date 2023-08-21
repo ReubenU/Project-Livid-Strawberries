@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=42 format=2]
 
 [ext_resource path="res://Assets/2D/main_start_button.png" type="Texture" id=1]
 [ext_resource path="res://Assets/2D/MainReticle.png" type="Texture" id=2]
@@ -27,6 +27,8 @@
 [ext_resource path="res://Assets/Audio/SFX/UI_Hover_Down.wav" type="AudioStream" id=25]
 [ext_resource path="res://Assets/Audio/SFX/UI_Cancel.wav" type="AudioStream" id=26]
 [ext_resource path="res://Assets/Audio/Menu_MX_v1-B.mp3" type="AudioStream" id=27]
+[ext_resource path="res://Assets/Audio/Gameplay_MX.wav" type="AudioStream" id=28]
+[ext_resource path="res://Assets/Audio/SFX/TetherGun_NoSurface.wav" type="AudioStream" id=29]
 
 [sub_resource type="DynamicFont" id=1]
 size = 32
@@ -279,25 +281,51 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="AudioVolumeLabel" type="Label" parent="GUI System/Settings Menu/Audio Options"]
+[node name="Music Slider Label" type="Label" parent="GUI System/Settings Menu/Audio Options"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -18.0
-margin_top = -18.0
+margin_top = -22.0
 margin_right = 19.0
-margin_bottom = -4.0
+margin_bottom = -8.0
 custom_colors/font_color = Color( 0, 1, 1, 1 )
 custom_fonts/font = SubResource( 7 )
-text = "Audio Vol."
+text = "Music Vol."
 align = 1
 
-[node name="VolumeSlider" type="HSlider" parent="GUI System/Settings Menu/Audio Options"]
+[node name="SFX Slider Label" type="Label" parent="GUI System/Settings Menu/Audio Options"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -18.0
+margin_top = -1.0
+margin_right = 19.0
+margin_bottom = 13.0
+custom_colors/font_color = Color( 0, 1, 1, 1 )
+custom_fonts/font = SubResource( 7 )
+text = "SFX Vol."
+align = 1
+
+[node name="MusicSlider" type="HSlider" parent="GUI System/Settings Menu/Audio Options"]
 margin_left = 6.0
-margin_top = 28.0
+margin_top = 24.0
 margin_right = 58.0
-margin_bottom = 36.0
+margin_bottom = 32.0
+custom_icons/grabber_highlight = ExtResource( 12 )
+custom_icons/grabber = ExtResource( 11 )
+custom_styles/slider = SubResource( 13 )
+custom_styles/grabber_area_highlight = SubResource( 14 )
+custom_styles/grabber_area = SubResource( 15 )
+value = 20.0
+
+[node name="SFXslider" type="HSlider" parent="GUI System/Settings Menu/Audio Options"]
+margin_left = 6.0
+margin_top = 45.0
+margin_right = 58.0
+margin_bottom = 53.0
 custom_icons/grabber_highlight = ExtResource( 12 )
 custom_icons/grabber = ExtResource( 11 )
 custom_styles/slider = SubResource( 13 )
@@ -403,41 +431,50 @@ stream = ExtResource( 26 )
 
 [node name="GUISelect" type="AudioStreamPlayer" parent="GUI SFX"]
 stream = ExtResource( 25 )
+volume_db = 1.0
 
 [node name="MenuMusic" type="AudioStreamPlayer" parent="GUI SFX"]
 stream = ExtResource( 27 )
-autoplay = true
+
+[node name="GameMusic" type="AudioStreamPlayer" parent="GUI SFX"]
+stream = ExtResource( 28 )
+
+[node name="SamplePlayerFoley" type="AudioStreamPlayer" parent="GUI SFX"]
+stream = ExtResource( 29 )
 
 [connection signal="button_down" from="GUI System/MainMenu/Play Game Button" to="GUI System" method="_on_Play_Game_Button_button_down"]
-[connection signal="mouse_entered" from="GUI System/MainMenu/Play Game Button" to="GUI SFX" method="_on_Play_Game_Button_mouse_entered"]
-[connection signal="pressed" from="GUI System/MainMenu/Play Game Button" to="GUI SFX" method="_on_Play_Game_Button_pressed"]
-[connection signal="mouse_entered" from="GUI System/MainMenu/Settings Button" to="GUI SFX" method="_on_Settings_Button_mouse_entered"]
+[connection signal="mouse_entered" from="GUI System/MainMenu/Play Game Button" to="GUI SFX" method="_on_Mouse_Hover"]
+[connection signal="pressed" from="GUI System/MainMenu/Play Game Button" to="GUI SFX" method="_on_Mouse_Click"]
+[connection signal="mouse_entered" from="GUI System/MainMenu/Settings Button" to="GUI SFX" method="_on_Mouse_Hover"]
 [connection signal="pressed" from="GUI System/MainMenu/Settings Button" to="GUI System" method="_on_Settings_Button_pressed"]
-[connection signal="pressed" from="GUI System/MainMenu/Settings Button" to="GUI SFX" method="_on_Settings_Button_pressed"]
-[connection signal="mouse_entered" from="GUI System/Settings Menu/Button Menu/Gameplay Options Button" to="GUI SFX" method="_on_Gameplay_Options_Button_mouse_entered"]
+[connection signal="pressed" from="GUI System/MainMenu/Settings Button" to="GUI SFX" method="_on_Mouse_Click"]
+[connection signal="mouse_entered" from="GUI System/Settings Menu/Button Menu/Gameplay Options Button" to="GUI SFX" method="_on_Mouse_Hover"]
 [connection signal="pressed" from="GUI System/Settings Menu/Button Menu/Gameplay Options Button" to="GUI System/Settings Menu" method="_on_Gameplay_Options_Button_pressed"]
-[connection signal="pressed" from="GUI System/Settings Menu/Button Menu/Gameplay Options Button" to="GUI SFX" method="_on_Gameplay_Options_Button_pressed"]
-[connection signal="mouse_entered" from="GUI System/Settings Menu/Button Menu/Audio Options Button" to="GUI SFX" method="_on_Audio_Options_Button_mouse_entered"]
+[connection signal="pressed" from="GUI System/Settings Menu/Button Menu/Gameplay Options Button" to="GUI SFX" method="_on_Mouse_Click"]
+[connection signal="mouse_entered" from="GUI System/Settings Menu/Button Menu/Audio Options Button" to="GUI SFX" method="_on_Mouse_Hover"]
 [connection signal="pressed" from="GUI System/Settings Menu/Button Menu/Audio Options Button" to="GUI System/Settings Menu" method="_on_Audio_Options_Button_pressed"]
-[connection signal="pressed" from="GUI System/Settings Menu/Button Menu/Audio Options Button" to="GUI SFX" method="_on_Audio_Options_Button_pressed"]
-[connection signal="mouse_entered" from="GUI System/Settings Menu/Button Menu/BackButton" to="GUI SFX" method="_on_BackButton_mouse_entered"]
+[connection signal="pressed" from="GUI System/Settings Menu/Button Menu/Audio Options Button" to="GUI SFX" method="_on_Mouse_Click"]
+[connection signal="mouse_entered" from="GUI System/Settings Menu/Button Menu/BackButton" to="GUI SFX" method="_on_Mouse_Hover"]
 [connection signal="pressed" from="GUI System/Settings Menu/Button Menu/BackButton" to="GUI System/Settings Menu" method="_on_BackButton_pressed"]
-[connection signal="pressed" from="GUI System/Settings Menu/Button Menu/BackButton" to="GUI SFX" method="_on_BackButton_pressed"]
+[connection signal="pressed" from="GUI System/Settings Menu/Button Menu/BackButton" to="GUI SFX" method="_on_Back_Button_Clicked"]
 [connection signal="text_changed" from="GUI System/Settings Menu/Gameplay Options/MouseSpeedText" to="Game World" method="_on_MouseSpeedText_text_changed"]
 [connection signal="text_changed" from="GUI System/Settings Menu/Gameplay Options/MouseSmoothText" to="Game World" method="_on_MouseSmoothText_text_changed"]
-[connection signal="mouse_entered" from="GUI System/Settings Menu/Gameplay Options/BackButton" to="GUI SFX" method="_on_BackButton_mouse_entered"]
+[connection signal="mouse_entered" from="GUI System/Settings Menu/Gameplay Options/BackButton" to="GUI SFX" method="_on_Mouse_Hover"]
 [connection signal="pressed" from="GUI System/Settings Menu/Gameplay Options/BackButton" to="GUI System/Settings Menu" method="_on_GamePlayOptions_BackButton_pressed"]
-[connection signal="pressed" from="GUI System/Settings Menu/Gameplay Options/BackButton" to="GUI SFX" method="_on_BackButton_pressed"]
-[connection signal="value_changed" from="GUI System/Settings Menu/Audio Options/VolumeSlider" to="Game World" method="_on_VolumeSlider_value_changed"]
-[connection signal="mouse_entered" from="GUI System/Settings Menu/Audio Options/BackButton" to="GUI SFX" method="_on_BackButton_mouse_entered"]
+[connection signal="pressed" from="GUI System/Settings Menu/Gameplay Options/BackButton" to="GUI SFX" method="_on_Back_Button_Clicked"]
+[connection signal="value_changed" from="GUI System/Settings Menu/Audio Options/MusicSlider" to="Game World" method="_on_Music_Slider_value_changed"]
+[connection signal="value_changed" from="GUI System/Settings Menu/Audio Options/MusicSlider" to="GUI SFX" method="_on_Music_Slider_value_changed"]
+[connection signal="value_changed" from="GUI System/Settings Menu/Audio Options/SFXslider" to="Game World" method="_on_SFX_Slider_value_changed"]
+[connection signal="value_changed" from="GUI System/Settings Menu/Audio Options/SFXslider" to="GUI SFX" method="_on_SFX_Slider_value_changed"]
+[connection signal="mouse_entered" from="GUI System/Settings Menu/Audio Options/BackButton" to="GUI SFX" method="_on_Mouse_Hover"]
 [connection signal="pressed" from="GUI System/Settings Menu/Audio Options/BackButton" to="GUI System/Settings Menu" method="_on_AudioOptions_BackButton_pressed"]
-[connection signal="pressed" from="GUI System/Settings Menu/Audio Options/BackButton" to="GUI SFX" method="_on_BackButton_pressed"]
-[connection signal="mouse_entered" from="GUI System/PauseMenu/Resume" to="GUI SFX" method="_on_Resume_mouse_entered"]
+[connection signal="pressed" from="GUI System/Settings Menu/Audio Options/BackButton" to="GUI SFX" method="_on_Back_Button_Clicked"]
+[connection signal="mouse_entered" from="GUI System/PauseMenu/Resume" to="GUI SFX" method="_on_Mouse_Hover"]
 [connection signal="pressed" from="GUI System/PauseMenu/Resume" to="Game World" method="_on_Resume_pressed"]
-[connection signal="pressed" from="GUI System/PauseMenu/Resume" to="GUI SFX" method="_on_Resume_pressed"]
-[connection signal="mouse_entered" from="GUI System/PauseMenu/Quit" to="GUI SFX" method="_on_Quit_mouse_entered"]
+[connection signal="pressed" from="GUI System/PauseMenu/Resume" to="GUI SFX" method="_on_Mouse_Click"]
+[connection signal="mouse_entered" from="GUI System/PauseMenu/Quit" to="GUI SFX" method="_on_Mouse_Hover"]
 [connection signal="pressed" from="GUI System/PauseMenu/Quit" to="Game World" method="_on_Quit_pressed"]
-[connection signal="pressed" from="GUI System/PauseMenu/Quit" to="GUI SFX" method="_on_Quit_pressed"]
-[connection signal="mouse_entered" from="GUI System/WinMenu/Return" to="GUI SFX" method="_on_Return_mouse_entered"]
+[connection signal="pressed" from="GUI System/PauseMenu/Quit" to="GUI SFX" method="_on_Back_Button_Clicked"]
+[connection signal="mouse_entered" from="GUI System/WinMenu/Return" to="GUI SFX" method="_on_Mouse_Hover"]
 [connection signal="pressed" from="GUI System/WinMenu/Return" to="Game World" method="_on_Return_pressed"]
-[connection signal="pressed" from="GUI System/WinMenu/Return" to="GUI SFX" method="_on_Return_pressed"]
+[connection signal="pressed" from="GUI System/WinMenu/Return" to="GUI SFX" method="_on_Mouse_Click"]

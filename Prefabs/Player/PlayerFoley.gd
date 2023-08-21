@@ -27,9 +27,8 @@ var is_tether_held = false
 var rng = RandomNumberGenerator.new()
 
 func _ready():
-	for  sfx in all_sfx:
-		sfx.volume_db = linear2db(GameSettings.audio_volume/100.0)
-
+	on_Audio_Setting_Changed()
+	
 	tether_gun.connect("tether_fail", self, "_on_Tether_No_Surface")
 	tether_gun.connect("tether_hook", self, "_on_Tether_Hooked")
 	tether_gun.connect("tether_held", self, "_on_Tether_Held")
@@ -38,6 +37,8 @@ func _ready():
 	rng.randomize()
 
 func _process(_delta):
+	#on_Audio_Setting_Changed()
+	
 	if (tether_hook_sfx.playing and !is_tether_held):
 		if (tether_hook_sfx.get_playback_position() >= 0.70):
 			tether_hook_sfx.stop()
@@ -53,7 +54,14 @@ func _process(_delta):
 		
 		if (round(player.h_velocity.length()) > 0):
 			random_footstep()
-		
+
+func on_Audio_Setting_Changed():
+	for sfx in all_sfx:
+		sfx.volume_db = linear2db(GameSettings.sfx_volume/100.0)
+	
+	for footstep in footsteps:
+		footstep.volume_db = linear2db(GameSettings.sfx_volume/100.0)
+
 onready var last_footstep = footsteps[0]
 func random_footstep():
 	var foot_index = rng.randi_range(0, len(footsteps)-1)
